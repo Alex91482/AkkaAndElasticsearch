@@ -1,0 +1,17 @@
+version: '2.2'
+services:
+  elasticsearch:
+    container_name: elastic-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.3
+    environment:
+      - xpack.security.enabled=false
+      - ELASTIC_PASSWORD=password
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    networks:
+      - ek-net
+    ports:
+      - 9200:9200
+networks:
+  ek-net:
+    driver: bridge
