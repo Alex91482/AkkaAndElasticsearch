@@ -1,5 +1,8 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -13,7 +16,13 @@ public class MyTestEntity {
 
     public MyTestEntity(){}
 
-    public MyTestEntity(Long id, String name, String surname, String description, List<String> parameter) {
+    @JsonCreator
+    public MyTestEntity(@JsonProperty("id")Long id,
+                        @JsonProperty("name")String name,
+                        @JsonProperty("surname")String surname,
+                        @JsonProperty("description")String description,
+                        @JsonProperty("parameter")List<String> parameter)
+    {
         this.id = id;
         this.name = name;
         this.surname = surname;
