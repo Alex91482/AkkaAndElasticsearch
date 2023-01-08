@@ -1,6 +1,6 @@
 # AkkaAndElasticsearch
 
-- curl -H "Content-Type: application/json" -X POST -d '{"myTestEntity":[{"id":"42","name":"test_name","surname":"test_surname","description":"test_description","parameter":["test","test1","test2"]}]}' http://localhost:8080/create_myTestEntity
+- curl -H "Content-Type: application/json" -X POST -d '{"id":42,"name":"test_name","surname":"test_surname","description":"test_description","parameter":null}' http://localhost:8080/create_myTestEntity
 - curl like: http://localhost:8080/myTestEntity/42
 - curl http://localhost:8080/myTestEntity/42.
 

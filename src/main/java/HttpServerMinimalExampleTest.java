@@ -9,6 +9,8 @@ import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.PathMatchers;
 import akka.http.javadsl.server.Route;
 import entity.MyTestEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.MyTestEntityService;
 
 import java.net.InetSocketAddress;
@@ -25,6 +27,8 @@ import static akka.http.javadsl.server.PathMatchers.segment;
 */
 
 public class HttpServerMinimalExampleTest extends AllDirectives {
+
+    private static final Logger logger = LoggerFactory.getLogger(HttpServerMinimalExampleTest.class);
 
     private static MyTestEntityService myTestEntityService;
 
@@ -67,8 +71,8 @@ public class HttpServerMinimalExampleTest extends AllDirectives {
                 get(() -> pathPrefix("myTestEntity", () ->
                         path(longSegment(), (Long id) -> {
                             final CompletionStage<Optional<MyTestEntity>> futureMaybeEntity = myTestEntityService.getByIdMyTestEntity(id);
-                            return onSuccess(futureMaybeEntity, maybeItem ->
-                                    maybeItem.map(item -> completeOK(item, Jackson.marshaller()))
+                            return onSuccess(futureMaybeEntity, maybeEntity ->
+                                    maybeEntity.map(entity -> completeOK(entity, Jackson.marshaller()))
                                             .orElseGet(() -> complete(StatusCodes.NOT_FOUND, "Not Found"))
                             );
                         }))),
