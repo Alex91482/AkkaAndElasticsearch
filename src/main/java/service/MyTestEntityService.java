@@ -4,6 +4,8 @@ import akka.Done;
 import dao.MyTestEntityDao;
 import dao.MyTestEntityDaoImpl;
 import entity.MyTestEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.RandomGenerationId;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class MyTestEntityService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyTestEntityService.class);
 
     private final MyTestEntityDao myTestEntityDao;
     private final RandomGenerationId generationId;
@@ -49,9 +53,10 @@ public class MyTestEntityService {
             }else{
                 entity.setParameter(List.of("not specified"));
             }
+            logger.info("Create MyTestEntity: {}", entity);
             return entity;
         }).thenApply(result -> {
-            myTestEntityDao.save(result);
+            //myTestEntityDao.save(result);
             return Done.getInstance();
         });
     }

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class ElasticMainClient {
 
-    //private static final Logger logger = LoggerFactory.getLogger(ElasticMainClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(ElasticMainClient.class);
 
     private static final String EKP_ELASTIC_API_ADDRESS = "localhost";
     private static final Integer EKP_ELASTIC_API_PORT = 9200;
@@ -18,7 +18,7 @@ public class ElasticMainClient {
     public static ElasticMainClient getInstance() {
         if (instance == null) {
             instance = new ElasticMainClient();
-            //logger.info("Create elastic client");
+            logger.info("Create elastic client");
         }
         return instance;
     }

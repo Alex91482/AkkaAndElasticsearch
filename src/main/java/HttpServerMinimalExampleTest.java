@@ -68,7 +68,7 @@ public class HttpServerMinimalExampleTest extends AllDirectives {
                         path("index", () ->
                                 getFromResource("templates/index.html")
                         )),
-                get(() -> pathPrefix("myTestEntity", () ->
+                get(() -> pathPrefix("entity", () ->
                         path(longSegment(), (Long id) -> {
                             final CompletionStage<Optional<MyTestEntity>> futureMaybeEntity = myTestEntityService.getByIdMyTestEntity(id);
                             return onSuccess(futureMaybeEntity, maybeEntity ->
@@ -77,8 +77,9 @@ public class HttpServerMinimalExampleTest extends AllDirectives {
                             );
                         }))),
                 post(() ->
-                        path("create_myTestEntity", () ->
+                        path("create", () ->
                                 entity(Jackson.unmarshaller(MyTestEntity.class), myTestEntity -> {
+                                    logger.info("Request to save");
                                     CompletionStage<Done> futureSaved = myTestEntityService.saveMyTestEntity(myTestEntity);
                                     return onSuccess(futureSaved, done ->
                                             complete("MyTestEntity created")

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 public class ElasticMainClientAkka {
 
-    //private static final Logger logger = LoggerFactory.getLogger(ElasticMainClientAkka.class);
+    private static final Logger logger = LoggerFactory.getLogger(ElasticMainClientAkka.class);
 
     private static ElasticsearchConnectionSettings connectionSettings;
 
@@ -16,8 +16,7 @@ public class ElasticMainClientAkka {
                     .create("http://localhost:9200")
                     .withCredentials("user", "password");
 
-            System.out.println("Create elastic client akka");
-            //logger.info("Create elastic client akka");
+            logger.info("Create elastic client akka");
         }
         return connectionSettings;
     }

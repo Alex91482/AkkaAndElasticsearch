@@ -1,13 +1,13 @@
 # AkkaAndElasticsearch
 
-- curl -H "Content-Type: application/json" -X POST -d '{"id":42,"name":"test_name","surname":"test_surname","description":"test_description","parameter":null}' http://localhost:8080/create_myTestEntity
+- curl -H "Content-Type: application/json" -X POST -d '{"id":42,"name":"test_name","surname":"test_surname","description":"test_description","parameter":["test1","test2","test3]}' http://localhost:8080/create
 - curl like: http://localhost:8080/myTestEntity/42
 - curl http://localhost:8080/myTestEntity/42.
 
 ### Конечные точки
 
-- /create_myTestEntity - (POST) сохранить сущность MyTestEntity в бд
-- /myTestEntity/{id}   - (GET) где {id} это id запрашиваемой сущности MyTestEntity
+- /create              - (POST) сохранить сущность MyTestEntity в бд
+- /entity/{id}         - (GET) где {id} это id запрашиваемой сущности MyTestEntity
 
 ### Ресурсы
 
