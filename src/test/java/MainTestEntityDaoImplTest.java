@@ -15,7 +15,8 @@ public class MainTestEntityDaoImplTest {
         try{
             //
             //createListAndFindAndDelete();
-            jacksonUnmarshalTest();
+            //updateTest();
+            //jacksonUnmarshalTest();
 
         }catch (Exception e){
             System.out.println("All is down!");
@@ -28,6 +29,31 @@ public class MainTestEntityDaoImplTest {
         String json = "{\"id\":42,\"name\":\"test_name\",\"surname\":\"test_surname\",\"description\":\"test_description\",\"parameter\":[\"test1\",\"test2\",\"test3\"]}";
         Unmarshaller<HttpEntity, MyTestEntity> um = Jackson.unmarshaller(MyTestEntity.class);
         // ???
+    }
+
+    private static void updateTest(){
+        try{
+            MyTestEntityDaoImpl dao = new MyTestEntityDaoImpl();
+
+            MyTestEntity entity1 = new MyTestEntity(2L, "name1", "surname1", "description test1", Arrays.asList("one test", "testOne", "TeStOnE", "TESTONE"));
+            MyTestEntity entity2 = new MyTestEntity(2L, "name2", "surname2", "description test2", Arrays.asList("two test", "testTwo", "TeStTwO", "TESTTWO"));
+
+            dao.save(entity1);
+            MyTestEntity mte = dao.findById(2L);
+            System.out.println(mte.getId().equals(2L) && mte.getSurname().equals("surname1"));
+
+            dao.update(entity2);
+            MyTestEntity mte1 = dao.findById(2L);
+            System.out.println(mte1.getSurname().equals("surname2"));
+
+            dao.delete(2L);
+
+            assert (mte.getId().equals(2L) && mte.getSurname().equals("surname1"));
+            assert (mte1.getId().equals(2L) && mte1.getSurname().equals("surname2"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private static void createListAndFindAndDelete(){

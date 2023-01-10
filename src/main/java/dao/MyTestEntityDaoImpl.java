@@ -94,13 +94,13 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
     public void update(MyTestEntity myTestEntity){
         try(var restClient =  elasticMainClient.getClient()) {
             var client = getElasticsearchClient(restClient);
-            var updateRequest = new UpdateRequest.Builder<Object, Object>()
+            var updateRequest = new UpdateRequest.Builder<MyTestEntity, MyTestEntity>()
                     .index(INDEX)
                     .id(String.valueOf(myTestEntity.getId()))
                     .doc(myTestEntity)
                     .build();
 
-            client.update(updateRequest, Object.class);
+            client.update(updateRequest, MyTestEntity.class);
 
         } catch (IOException e) {
             logger.error("Exception at update: {}", e.getMessage());
