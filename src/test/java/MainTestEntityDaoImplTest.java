@@ -1,3 +1,6 @@
+import akka.http.javadsl.marshallers.jackson.Jackson;
+import akka.http.javadsl.model.HttpEntity;
+import akka.http.javadsl.unmarshalling.Unmarshaller;
 import dao.MyTestEntityDaoImpl;
 import entity.MyTestEntity;
 
@@ -12,12 +15,19 @@ public class MainTestEntityDaoImplTest {
         try{
             //
             //createListAndFindAndDelete();
+            jacksonUnmarshalTest();
 
         }catch (Exception e){
             System.out.println("All is down!");
             e.printStackTrace();
         }
         System.out.println("End program");
+    }
+
+    private static void jacksonUnmarshalTest(){
+        String json = "{\"id\":42,\"name\":\"test_name\",\"surname\":\"test_surname\",\"description\":\"test_description\",\"parameter\":[\"test1\",\"test2\",\"test3\"]}";
+        Unmarshaller<HttpEntity, MyTestEntity> um = Jackson.unmarshaller(MyTestEntity.class);
+        // ???
     }
 
     private static void createListAndFindAndDelete(){

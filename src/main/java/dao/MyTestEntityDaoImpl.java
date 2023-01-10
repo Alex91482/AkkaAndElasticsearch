@@ -10,12 +10,16 @@ import co.elastic.clients.transport.rest_client.RestClientTransport;
 import dao.config.ElasticMainClient;
 import entity.MyTestEntity;
 import org.elasticsearch.client.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class MyTestEntityDaoImpl implements MyTestEntityDao{
+
+    private static final Logger logger = LoggerFactory.getLogger(MyTestEntityDaoImpl.class);
 
     private static final String INDEX = "mytestentity";
     private final ElasticMainClient elasticMainClient = ElasticMainClient.getInstance();
@@ -51,7 +55,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             });
 
         } catch (IOException e) {
-            System.out.println("Exception at save in index: " + e.getMessage());
+            logger.error("Exception at save in index: {}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -79,10 +83,10 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
                 return builder;
             });
 
-            System.out.println("Response error: " + response.errors());
+            logger.info("Response error: {}", response.errors());
 
         } catch (IOException e) {
-            System.out.println("Exception at save: " + e.getMessage());
+            logger.error("Exception at save: {}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -99,7 +103,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             client.update(updateRequest, Object.class);
 
         } catch (IOException e) {
-            System.out.println("Exception at update: " + e.getMessage());
+            logger.error("Exception at update: {}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -115,7 +119,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             client.delete(deleteRequest);
 
         }catch (IOException e) {
-            System.out.println("Exception at delete by id: " + e.getMessage());
+            logger.error("Exception at delete by id: {}", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -130,7 +134,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             myTestEntity = getResponse.source();
 
         } catch (IOException e) {
-            System.out.println("Exception at find by id: " + e.getMessage());
+            logger.error("Exception at find by id: {}", e.getMessage());
             e.printStackTrace();
         }
         return myTestEntity;
@@ -157,7 +161,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             );
 
         }catch (IOException e) {
-            System.out.println("Exception at find by name: " + e.getMessage());
+            logger.error("Exception at find by name: {}", e.getMessage());
             e.printStackTrace();
         }
         return result;
@@ -184,7 +188,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             );
 
         }catch (IOException e) {
-            System.out.println("Exception at find by description: " + e.getMessage());
+            logger.error("Exception at find by description: {}", e.getMessage());
             e.printStackTrace();
         }
         return result;
@@ -211,7 +215,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             );
 
         }catch (IOException e) {
-            System.out.println("Exception at find by name: " + e.getMessage());
+            logger.error("Exception at find by parameter: {}", e.getMessage());
             e.printStackTrace();
         }
         return result;
@@ -244,7 +248,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
                     .toList());
 
         }catch (IOException e) {
-            System.out.println("Exception at find by name: " + e.getMessage());
+            logger.error("Exception at find by parameters: {}", e.getMessage());
             e.printStackTrace();
         }
         return result;
