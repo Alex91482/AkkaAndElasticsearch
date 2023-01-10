@@ -30,7 +30,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             client.indices().create(c -> c.index(indexName));
 
         }catch (Exception e){
-            System.out.println("Exception at create index: " + e.getMessage());
+            logger.error("Exception at create index: {}", e.getMessage());
             e.printStackTrace();
         }
     }
