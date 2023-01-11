@@ -21,7 +21,7 @@ import static akka.http.javadsl.server.PathMatchers.longSegment;
 import static akka.http.javadsl.server.PathMatchers.segment;
 
 /*
- curl -H "Content-Type: application/json" -X POST -d '{"myTestEntity":[{"id":"42","name":"test_name","surname":"test_surname","description":"test_description","parameter":["test","test1","test2"]}]}' http://localhost:8080/create
+ curl -H "Content-Type: application/json" -X POST -d '{"id":"42","name":"test_name","surname":"test_surname","description":"test_description","parameter":["test","test1","test2"]}' http://localhost:8080/create
  curl like: http://localhost:8080/entity/42
  curl http://localhost:8080/entity/42.
 */
@@ -78,9 +78,9 @@ public class HttpServerMinimalExampleTest extends AllDirectives {
                         }))),
                 post(() ->
                         path("create", () ->
-                                entity(Jackson.unmarshaller(MyTestEntity.class), myTestEntity -> {
+                                entity(Jackson.unmarshaller(MyTestEntity.class), myTestEntity -> { //баг при демаршалинге
                                     logger.info("Request to save");
-                                    CompletionStage<Done> futureSaved = myTestEntityService.saveMyTestEntity(myTestEntity);
+                                    CompletionStage<Done> futureSaved = myTestEntityService.saveMyTestEntity(myTestEntity); //закоменчено сохранение
                                     return onSuccess(futureSaved, done ->
                                             complete("MyTestEntity created")
                                     );

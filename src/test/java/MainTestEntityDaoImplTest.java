@@ -3,6 +3,7 @@ import akka.http.javadsl.model.HttpEntity;
 import akka.http.javadsl.unmarshalling.Unmarshaller;
 import dao.MyTestEntityDaoImpl;
 import entity.MyTestEntity;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,28 +11,15 @@ import java.util.Objects;
 
 public class MainTestEntityDaoImplTest {
 
-    public static void main(String[] args){
-        System.out.println("Start program");
-        try{
-            //
-            //createListAndFindAndDelete();
-            //updateTest();
-            //jacksonUnmarshalTest();
-
-        }catch (Exception e){
-            System.out.println("All is down!");
-            e.printStackTrace();
-        }
-        System.out.println("End program");
-    }
-
-    private static void jacksonUnmarshalTest(){
+    //@Test
+    public void jacksonUnmarshalTest(){
         String json = "{\"id\":42,\"name\":\"test_name\",\"surname\":\"test_surname\",\"description\":\"test_description\",\"parameter\":[\"test1\",\"test2\",\"test3\"]}";
         Unmarshaller<HttpEntity, MyTestEntity> um = Jackson.unmarshaller(MyTestEntity.class);
         // ???
     }
 
-    private static void updateTest(){
+    //@Test
+    public void updateTest(){
         try{
             MyTestEntityDaoImpl dao = new MyTestEntityDaoImpl();
 
@@ -56,7 +44,8 @@ public class MainTestEntityDaoImplTest {
         }
     }
 
-    private static void createListAndFindAndDelete(){
+    //@Test
+    public void createListAndFindAndDelete(){
         try {
             MyTestEntityDaoImpl dao = new MyTestEntityDaoImpl();
 
@@ -89,16 +78,17 @@ public class MainTestEntityDaoImplTest {
                 dao.delete(entity.getId());
             });
 
-            //assert (listDescription.size() == 1);
-            //assert (listDescription1.size() == 6);
-            //assert (listParameter.size() == 2);
+            assert (listDescription.size() == 1);
+            assert (listDescription1.size() == 6);
+            assert (listParameter.size() == 2);
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private static void saveAndFindById(){
+    //@Test
+    public void saveAndFindById(){
         MyTestEntityDaoImpl dao = new MyTestEntityDaoImpl();
         System.out.println("Create entity");
         MyTestEntity entity = createMyTestEntity(1L, Arrays.asList("params1_1", "params2_1", "params3_1"));
@@ -111,7 +101,7 @@ public class MainTestEntityDaoImplTest {
         assert (Objects.equals(entity.getId(), entity1.getId()));
     }
 
-    private static MyTestEntity createMyTestEntity(Long id, List<String> params){
+    private MyTestEntity createMyTestEntity(Long id, List<String> params){
         MyTestEntity entity = new MyTestEntity();
         entity.setId(id);
         entity.setName("Test_Name");
