@@ -4,10 +4,12 @@ import akka.actor.typed.javadsl.Behaviors;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.marshallers.jackson.Jackson;
+import akka.http.javadsl.model.HttpEntity;
 import akka.http.javadsl.model.StatusCodes;
 import akka.http.javadsl.server.AllDirectives;
 import akka.http.javadsl.server.PathMatchers;
 import akka.http.javadsl.server.Route;
+import akka.http.javadsl.unmarshalling.Unmarshaller;
 import entity.MyTestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,7 @@ import static akka.http.javadsl.server.PathMatchers.segment;
 
 /*
  curl -H "Content-Type: application/json" -X POST -d '{"id":"42","name":"test_name","surname":"test_surname","description":"test_description","parameter":["test","test1","test2"]}' http://localhost:8080/create
+ curl -X POST -H "Content-Type: application/json" -d '{"id":42,"name":"test_name","surname":"test_surname","description":"test_description","parameter":["test","test1","test2"]}' http://localhost:8080/create
  curl like: http://localhost:8080/entity/42
  curl http://localhost:8080/entity/42.
 */
@@ -82,7 +85,7 @@ public class HttpServerMinimalExampleTest extends AllDirectives {
                                     logger.info("Request to save");
                                     CompletionStage<Done> futureSaved = myTestEntityService.saveMyTestEntity(myTestEntity); //закоменчено сохранение
                                     return onSuccess(futureSaved, done ->
-                                            complete("MyTestEntity created")
+                                            complete("save MyTestEntity created")
                                     );
                                 })))
         );

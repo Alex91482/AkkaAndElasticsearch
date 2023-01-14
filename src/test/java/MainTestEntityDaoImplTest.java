@@ -1,22 +1,18 @@
 import akka.http.javadsl.marshallers.jackson.Jackson;
+import akka.http.javadsl.model.ContentTypes;
+import akka.http.javadsl.model.HttpEntities;
 import akka.http.javadsl.model.HttpEntity;
+import akka.http.javadsl.model.HttpRequest;
+import akka.http.javadsl.server.Route;
 import akka.http.javadsl.unmarshalling.Unmarshaller;
 import dao.MyTestEntityDaoImpl;
 import entity.MyTestEntity;
-import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 public class MainTestEntityDaoImplTest {
-
-    //@Test
-    public void jacksonUnmarshalTest(){
-        String json = "{\"id\":42,\"name\":\"test_name\",\"surname\":\"test_surname\",\"description\":\"test_description\",\"parameter\":[\"test1\",\"test2\",\"test3\"]}";
-        Unmarshaller<HttpEntity, MyTestEntity> um = Jackson.unmarshaller(MyTestEntity.class);
-        // ???
-    }
 
     //@Test
     public void updateTest(){
@@ -28,16 +24,16 @@ public class MainTestEntityDaoImplTest {
 
             dao.save(entity1);
             MyTestEntity mte = dao.findById(2L);
-            System.out.println(mte.getId().equals(2L) && mte.getSurname().equals("surname1"));
+            System.out.println(mte.id().equals(2L) && mte.surname().equals("surname1"));
 
             dao.update(entity2);
             MyTestEntity mte1 = dao.findById(2L);
-            System.out.println(mte1.getSurname().equals("surname2"));
+            System.out.println(mte1.surname().equals("surname2"));
 
             dao.delete(2L);
 
-            assert (mte.getId().equals(2L) && mte.getSurname().equals("surname1"));
-            assert (mte1.getId().equals(2L) && mte1.getSurname().equals("surname2"));
+            assert (mte.id().equals(2L) && mte.surname().equals("surname1"));
+            assert (mte1.id().equals(2L) && mte1.surname().equals("surname2"));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -74,8 +70,8 @@ public class MainTestEntityDaoImplTest {
             listParameter.forEach(entity -> System.out.println(entity.toString()));
 
             list.forEach(entity -> {
-                System.out.println("Delete entity by id: " + entity.getId());
-                dao.delete(entity.getId());
+                System.out.println("Delete entity by id: " + entity.id());
+                dao.delete(entity.id());
             });
 
             assert (listDescription.size() == 1);
@@ -98,10 +94,10 @@ public class MainTestEntityDaoImplTest {
         System.out.println(entity1.toString());
 
         assert (entity1 != null);
-        assert (Objects.equals(entity.getId(), entity1.getId()));
+        assert (Objects.equals(entity.id(), entity1.id()));
     }
 
-    private MyTestEntity createMyTestEntity(Long id, List<String> params){
+    /*private MyTestEntity createMyTestEntity(Long id, List<String> params){
         MyTestEntity entity = new MyTestEntity();
         entity.setId(id);
         entity.setName("Test_Name");
@@ -110,5 +106,9 @@ public class MainTestEntityDaoImplTest {
         entity.setParameter(params);
 
         return entity;
+    }*/
+
+    private MyTestEntity createMyTestEntity(Long id, List<String> params){
+        return new MyTestEntity(id, "Test_Name", "Test_surname", "Test description", params);
     }
 }

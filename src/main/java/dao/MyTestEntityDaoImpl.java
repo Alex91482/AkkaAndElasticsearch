@@ -43,8 +43,8 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
                 for (MyTestEntity entity : list) {
                     builder.index(index)
                             .operations(ob -> {
-                                if (entity.getId() != null) {
-                                    ob.index(ib -> ib.document(entity).id(String.valueOf(entity.getId())));
+                                if (entity.id() != null) {
+                                    ob.index(ib -> ib.document(entity).id(String.valueOf(entity.id())));
                                 } else {
                                     ob.index(ib -> ib.document(entity));
                                 }
@@ -72,8 +72,8 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
                 for (MyTestEntity entity : list) {
                     builder.index(INDEX)
                             .operations(ob -> {
-                                if (entity.getId() != null) {
-                                    ob.index(ib -> ib.document(entity).id(String.valueOf(entity.getId())));
+                                if (entity.id() != null) {
+                                    ob.index(ib -> ib.document(entity).id(String.valueOf(entity.id())));
                                 } else {
                                     ob.index(ib -> ib.document(entity));
                                 }
@@ -96,7 +96,7 @@ public class MyTestEntityDaoImpl implements MyTestEntityDao{
             var client = getElasticsearchClient(restClient);
             var updateRequest = new UpdateRequest.Builder<MyTestEntity, MyTestEntity>()
                     .index(INDEX)
-                    .id(String.valueOf(myTestEntity.getId()))
+                    .id(String.valueOf(myTestEntity.id()))
                     .doc(myTestEntity)
                     .build();
 

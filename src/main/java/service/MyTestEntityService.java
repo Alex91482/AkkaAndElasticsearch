@@ -6,7 +6,8 @@ import dao.MyTestEntityDaoImpl;
 import entity.MyTestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import util.RandomGenerationId;
+import util.NullCheck;
+import util.NullCheckImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,46 +18,28 @@ public class MyTestEntityService {
     private static final Logger logger = LoggerFactory.getLogger(MyTestEntityService.class);
 
     private final MyTestEntityDao myTestEntityDao;
-    private final RandomGenerationId generationId;
+    private final NullCheck nullCheck;
 
     public MyTestEntityService(){
         this.myTestEntityDao = new MyTestEntityDaoImpl();
-        this.generationId = new RandomGenerationId();
+        this.nullCheck = new NullCheckImpl();
     }
 
     public CompletableFuture<Done> saveMyTestEntity(MyTestEntity myTestEntity){
         //
         return CompletableFuture.supplyAsync(() -> {
-            MyTestEntity entity = new MyTestEntity();
-            if(myTestEntity.getId() != null){
-                entity.setId(myTestEntity.getId());
-            }else{
-                entity.setId(generationId.generationId());
-            }
-            if(myTestEntity.getName() != null){
-                entity.setName(myTestEntity.getName());
-            }else{
-                entity.setName("not specified");
-            }
-            if(myTestEntity.getSurname() != null){
-                entity.setSurname(myTestEntity.getSurname());
-            }else{
-                entity.setSurname("not specified");
-            }
-            if(myTestEntity.getDescription() != null){
-                entity.setDescription(myTestEntity.getDescription());
-            }else{
-                entity.setDescription("not specified");
-            }
-            if(myTestEntity.getParameter() != null && myTestEntity.getParameter().size() > 0){
-                entity.setParameter(myTestEntity.getParameter());
-            }else{
-                entity.setParameter(List.of("not specified"));
-            }
+
+            Long id = nullCheck.check(myTestEntity.id());
+            String name = nullCheck.check(myTestEntity.name());
+            String surname = nullCheck.check(myTestEntity.surname());
+            String description = nullCheck.check(myTestEntity.description());
+            List<String> parameter = nullCheck.check(myTestEntity.parameter());
+
+            MyTestEntity entity = new MyTestEntity(id, name, surname, description, parameter);
             logger.info("Create MyTestEntity: {}", entity);
             return entity;
         }).thenApply(result -> {
-            //myTestEntityDao.save(result);
+            myTestEntityDao.save(result);
             return Done.getInstance();
         });
     }
