@@ -46,7 +46,7 @@ public class TestEntityRouters extends AllDirectives {
         ));
     }
 
-    @Path("/{id}")
+    @Path("/entity/{id}")
     @GET
     @Operation(
             description = "Endpoint to get MyTestEntity by ID",

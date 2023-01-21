@@ -2,8 +2,8 @@
 
 ### Конечные точки
 
-- /create              - (POST) сохранить сущность MyTestEntity в бд
-- /entity/{id}         - (GET) где {id} это id запрашиваемой сущности MyTestEntity
+- /use/create              - (POST) сохранить сущность MyTestEntity в бд
+- /use/entity/{id}         - (GET) где {id} это id запрашиваемой сущности MyTestEntity
 
 ### Ресурсы
 
@@ -12,5 +12,5 @@
 
 ### Адреса страниц
 
-- /index
+- /view/index
  
